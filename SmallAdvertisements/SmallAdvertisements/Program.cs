@@ -24,6 +24,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IAdvertisementService, AdvertisementService>();
+builder.Services.AddScoped<ILikeService, LikeService>();
+
 builder.Services.ConfigureApplicationCookie(config =>
 {
     config.LoginPath = "/Users/Login";

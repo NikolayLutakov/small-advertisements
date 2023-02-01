@@ -2,6 +2,8 @@
 @model InputFormModel
 
 <h1>Login</h1>
+<a asp-area="" asp-controller="Users" asp-action="Register">Register</a>
+
 <form method="post">
     <label>UserName</label>
     <input type="text" asp-for="@Model.UserName" />

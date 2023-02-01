@@ -110,7 +110,7 @@
                     Date = c.Date,
 
                 }).ToList(),
-                Likes = a.Comments.Select(l => new LikeOutputModel
+                Likes = a.Likes.Select(l => new LikeOutputModel
                 {
                     Id = l.Id,
                     AdvertisementId = l.AdvertisementId,
@@ -149,7 +149,7 @@
                     Date = c.Date,
 
                 }).ToList(),
-                Likes = advertisement.Comments.Select(l => new LikeOutputModel
+                Likes = advertisement.Likes.Select(l => new LikeOutputModel
                 {
                     Id = l.Id,
                     AdvertisementId = l.AdvertisementId,
