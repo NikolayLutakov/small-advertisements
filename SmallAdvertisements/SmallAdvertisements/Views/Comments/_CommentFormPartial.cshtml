@@ -1,0 +1,11 @@
+﻿@using SmallAdvertisements.Models.ViewModels.Comments;
+@model CommentsFormModel
+
+<form method="post">
+    <input asp-for="@Model.AdvertisementId" hidden/>
+    <input asp-for="@Model.Id" hidden/>
+    <label>Body</label>
+    <input type="textarea" asp-for="@Model.Body" />
+    <input type="submit" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>

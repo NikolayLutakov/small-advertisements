@@ -118,7 +118,8 @@
 
                 }).ToList()
 
-            }).ToList();
+            }).OrderByDescending(c => c.Date)
+                .ToList();
 
             return allAdvertisements;
 
@@ -187,7 +188,8 @@
                     Author = l.Author,
 
                 }).ToList()
-            }).ToList();
+            }).OrderByDescending(c => c.Date)
+                  .ToList();
 
             return advertisements;
         }

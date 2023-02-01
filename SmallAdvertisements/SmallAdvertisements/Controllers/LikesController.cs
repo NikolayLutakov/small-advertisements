@@ -29,7 +29,12 @@ namespace SmallAdvertisements.Controllers
 
             var currentUser = await _userManager.GetUserAsync(User);
 
-            _likeService.Like(advertisementId, currentUser);
+           var success = _likeService.Like(advertisementId, currentUser);
+
+            if (!success)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction(action, controller);
         }
@@ -46,8 +51,12 @@ namespace SmallAdvertisements.Controllers
 
             var currentUser = await _userManager.GetUserAsync(User);
 
-            _likeService.Unlike(advertisementId, currentUser);
+            var success =  _likeService.Unlike(advertisementId, currentUser);
 
+            if (!success)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction(action, controller);
         }
