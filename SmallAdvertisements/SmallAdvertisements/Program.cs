@@ -24,7 +24,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IAdvertisementService, AdvertisementService>();
-
+builder.Services.ConfigureApplicationCookie(config => { config.LoginPath = "/Users/Login"; }); 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
