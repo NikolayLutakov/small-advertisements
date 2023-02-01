@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <Folder Include="Data\Database\" />
+    <Folder Include="Models\ServiceModels\Comment\Input\" />
+    <Folder Include="Models\ServiceModels\Like\Input\" />
   </ItemGroup>
 
   <ItemGroup>

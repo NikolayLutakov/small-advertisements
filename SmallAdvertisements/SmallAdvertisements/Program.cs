@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SmallAdvertisements.Data.Context;
+using SmallAdvertisements.Services;
+using SmallAdvertisements.Services.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 })
     .AddEntityFrameworkStores<AdvertisementsDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IAdvertisementService, AdvertisementService>();
 
 var app = builder.Build();
 
