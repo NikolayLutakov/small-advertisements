@@ -1,8 +1,31 @@
-﻿@{
+﻿@using SmallAdvertisements.Models.ViewModels.Home;
+@model IndexViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@foreach (var advertisment in Model.Advertisements)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@advertisment.Title</h5>
+            <p class="card-text">@advertisment.Body</p>
+            <p class="card-text">@advertisment.Author.UserName</p>
+            <a href="#" class="card-link">Details</a>
+            @if (User.Identity.Name != null)
+            {
+                @if (advertisment.Likes.Any(x => x.Author.UserName == User.Identity.Name))
+                {
+                    <a asp-controller="Likes" asp-action="Unlike" asp-route-advertisementId="@advertisment.Id" asp-route-caller="Index" class="btn btn-info">Unlike</a>
+                }
+                else
+                {
+                    <a asp-controller="Likes" asp-action="Like" asp-route-advertisementId="@advertisment.Id" asp-route-caller="Index" class="btn btn-primary">Like</a>
+                }
+            }
+            
+        </div>
+    </div>
+
+}

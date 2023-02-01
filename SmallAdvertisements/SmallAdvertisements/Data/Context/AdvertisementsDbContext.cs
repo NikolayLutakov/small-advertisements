@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SmallAdvertisements.Data.Entities;
 
 namespace SmallAdvertisements.Data.Context
 {
@@ -10,5 +11,13 @@ namespace SmallAdvertisements.Data.Context
         {
 
         }
+
+        public DbSet<Advertisement> Advertisements { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Like> Likes { get; set; }
+
+       
+
+
     }
 }

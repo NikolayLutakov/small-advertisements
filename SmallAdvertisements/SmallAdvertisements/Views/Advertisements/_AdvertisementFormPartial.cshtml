@@ -1,0 +1,12 @@
+﻿@using SmallAdvertisements.Models.ViewModels.Advertisement;
+@model AdvertisementFormModel
+
+<form method="post">
+    <input asp-for="@Model.Id" hidden/>
+    <label>Title</label>
+    <input type="text" asp-for="@Model.Title" />
+    <label>Body</label>
+    <input type="textarea" asp-for="@Model.Body" />
+    <input type="submit" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>
