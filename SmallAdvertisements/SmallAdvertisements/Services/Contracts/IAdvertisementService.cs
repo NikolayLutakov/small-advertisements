@@ -13,7 +13,7 @@
 
         AdvertisementOutputModel GetById(int Id);
 
-        AdvertisementOutputModel GetByUser(string UserId);
+        ICollection<AdvertisementOutputModel> GetByUser(string UserId);
 
         ICollection<AdvertisementOutputModel> GetAll();
 

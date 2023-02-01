@@ -162,23 +162,16 @@
 
         }
 
-        public AdvertisementOutputModel GetByUser(string UserId)
+        public ICollection<AdvertisementOutputModel> GetByUser(string UserId)
         {
-            var advertisement = _data.Advertisements.FirstOrDefault(x => x.Author.Id == UserId);
-
-            if (advertisement == null)
+            var advertisements = _data.Advertisements.Where(x => x.Author.Id == UserId).Select(ad => new AdvertisementOutputModel()
             {
-                return null;
-            }
-
-            var advertisementOutputModel = new AdvertisementOutputModel
-            {
-                Id = advertisement.Id,
-                Author = advertisement.Author,
-                Body = advertisement.Body,
-                Date = advertisement.Date,
-                Title = advertisement.Title,
-                Comments = advertisement.Comments.Select(c => new CommentOutputModel
+                Id = ad.Id,
+                Author = ad.Author,
+                Body = ad.Body,
+                Date = ad.Date,
+                Title = ad.Title,
+                Comments = ad.Comments.Select(c => new CommentOutputModel
                 {
                     Id = c.Id,
                     AdvertisementId = c.Id,
@@ -187,16 +180,16 @@
                     Date = c.Date,
 
                 }).ToList(),
-                Likes = advertisement.Comments.Select(l => new LikeOutputModel
+                Likes = ad.Likes.Select(l => new LikeOutputModel
                 {
                     Id = l.Id,
                     AdvertisementId = l.AdvertisementId,
                     Author = l.Author,
 
                 }).ToList()
-            };
+            }).ToList();
 
-            return advertisementOutputModel;
+            return advertisements;
         }
     }
 }

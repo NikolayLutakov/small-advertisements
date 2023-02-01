@@ -2,7 +2,7 @@
 @model AdvertisementFormModel
 
 <form method="post">
-    <input asp-for="@Model.Id" />
+    <input asp-for="@Model.Id" hidden/>
     <label>Title</label>
     <input type="text" asp-for="@Model.Title" />
     <label>Body</label>

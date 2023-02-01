@@ -114,5 +114,19 @@
             return RedirectToAction("Index", "Home");
 
         }
+
+        public async Task<IActionResult> MyAdvertisements()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var advertisements = _advertisementService.GetByUser(currentUser.Id);
+
+            var model = new MyAdvertisementsViewModel()
+            {
+                MyAdvertisements = advertisements
+            };
+
+            return View(model);
+        }
     }
 }

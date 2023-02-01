@@ -1,0 +1,18 @@
+﻿@using SmallAdvertisements.Models.ViewModels.Advertisement;
+@model MyAdvertisementsViewModel
+
+@foreach (var advertisment in Model.MyAdvertisements)
+{
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Title: @advertisment.Title</h5>
+            <p class="card-text">Body: @advertisment.Body</p>
+            <p class="card-text">Author: @advertisment.Author.UserName</p>
+            <p class="card-text">Likes: @advertisment.Likes.Count</p>
+            <a asp-controller="Comments" asp-action="AllByAdverisement" asp-route-id="@advertisment.Id" class="btn btn-primary">See Comments</a>
+            <a asp-controller="Advertisements" asp-action="Edit" asp-route-id="@advertisment.Id" class="btn btn-primary">Edit</a>
+            <a asp-controller="Advertisements" asp-action="Delete" asp-route-id="@advertisment.Id" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+
+}
