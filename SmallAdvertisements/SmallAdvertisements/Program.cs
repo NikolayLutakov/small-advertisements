@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SmallAdvertisements.Data.Context;
-using SmallAdvertisements.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,15 +11,15 @@ builder.Services.AddDbContext<AdvertisementsDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Db"));
 });
 
-builder.Services.AddIdentity<User, IdentityRole>(options =>
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 {
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
 })
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<AdvertisementsDbContext>();
+    .AddEntityFrameworkStores<AdvertisementsDbContext>()
+    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 

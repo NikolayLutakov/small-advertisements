@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SmallAdvertisements.Data.Entities;
 
 namespace SmallAdvertisements.Data.Context
 {
-    public class AdvertisementsDbContext : IdentityDbContext<User>
+    public class AdvertisementsDbContext : IdentityDbContext<IdentityUser>
     {
         public AdvertisementsDbContext(DbContextOptions<AdvertisementsDbContext> options) : base(options)
         {
