@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Database\" />
-    <Folder Include="Data\Entities\" />
   </ItemGroup>
 
   <ItemGroup>
