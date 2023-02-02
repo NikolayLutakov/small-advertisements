@@ -1,0 +1,27 @@
+﻿@using SmallAdvertisements.Models.ViewModels.Comments;
+@model ListCommentsViewModel
+
+<a asp-controller="Advertisements" asp-action="MyAdvertisements" class="btn btn-secondary">Back</a>
+<h1>Comments for: @Model.AdvertisemetTitle</h1>
+@if (Model.Comments.Count == 0)
+{
+    <h1>No Comments for This Advertisement</h1>
+}
+else
+{
+    foreach (var comment in Model.Comments)
+    {
+        <div class="second py-2 px-2">
+            <span class="text1">@comment.Body</span>
+            <div class="d-flex justify-content-between py-1 pt-2">
+                <div><span class="text2">Author: @comment.Author.UserName</span></div>
+                <div><span class="text2">Date: @comment.Date.ToString("d")</span></div>
+            </div>
+            @if (comment.Author.UserName == User.Identity.Name)
+            {
+                <a asp-controller="Comments" asp-action="Edit" asp-route-commentId="@comment.Id" asp-route-callerView="SeeComments" class="btn btn-primary">Edit</a>
+                <a asp-controller="Comments" asp-action="Delete" asp-route-commentId="@comment.Id" asp-route-callerView="SeeComments" class="btn btn-danger">Delete</a>
+            }
+        </div>
+    }
+}

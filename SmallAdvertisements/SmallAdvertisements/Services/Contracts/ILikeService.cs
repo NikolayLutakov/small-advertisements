@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SmallAdvertisements.Models.ServiceModels.Like.Output;
 
 namespace SmallAdvertisements.Services.Contracts
 {
@@ -7,5 +8,7 @@ namespace SmallAdvertisements.Services.Contracts
         bool Like(int advertisementId, IdentityUser user);
 
         bool Unlike(int advertisementId, IdentityUser user);
+
+        ICollection<LikeOutputModel> GetUserLikes(string userId);
     }
 }

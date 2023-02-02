@@ -14,5 +14,7 @@
 
         public IdentityUser Author { get; set; }
         public int AdvertisementId { get; set; }
+
+        public string AdvertisementTitle { get; set; }
     }
 }

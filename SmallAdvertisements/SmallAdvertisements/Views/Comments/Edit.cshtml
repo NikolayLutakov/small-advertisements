@@ -1,0 +1,27 @@
+﻿@using SmallAdvertisements.Models.ViewModels.Comments;
+@model CommentsFormModel
+@{
+    var controller = "Home";
+
+    if (Model.CallerView == "Details")
+    {
+        controller = "Advertisements";
+    }
+
+    if (Model.CallerView == "SeeComments")
+    {
+        controller = "Comments";
+    }
+
+    if (Model.CallerView == "MyComments")
+    {
+        controller = "Comments";
+    }
+}
+
+<h1>Edit comment</h1>
+
+<a asp-controller="@controller" asp-action="@Model.CallerView" asp-route-advertisementId="@Model.AdvertisementId" asp-route-advertisementTitle="@Model.AdvertisementTitle" class="btn btn-secondary">Back</a>
+
+<partial name="_CommentFormPartial.cshtml" for="@Model" />
+

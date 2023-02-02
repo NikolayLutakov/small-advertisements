@@ -49,7 +49,7 @@
                 return BadRequest();
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("MyAdvertisements", "Advertisements");
         }
 
         public IActionResult Edit(int Id)
@@ -96,7 +96,7 @@
                 return BadRequest();
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("MyAdvertisements", "Advertisements");
 
         }
 
@@ -111,7 +111,7 @@
                 return BadRequest();
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("MyAdvertisements", "Advertisements");
 
         }
 
@@ -124,6 +124,26 @@
             var model = new MyAdvertisementsViewModel()
             {
                 MyAdvertisements = advertisements
+            };
+
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        public IActionResult Details(int advertisementId)
+        {
+            var ad = _advertisementService.GetById(advertisementId);
+
+            var model = new AdvertisementDetailsViewModel()
+            {
+                Id = ad.Id,
+                AdvertisementTitle = ad.Title,
+                Author = ad.Author.UserName,
+                Body = ad.Body,
+                Comments = ad.Comments.ToList(),
+                DateAdded = ad.Date.ToString("d"),
+                Likes = ad.Likes.ToList(),
+                LikesCount = ad.Likes.Count
             };
 
             return View(model);

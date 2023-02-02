@@ -1,29 +1,42 @@
 ﻿@using SmallAdvertisements.Models.ViewModels.Advertisement;
 @model MyAdvertisementsViewModel
 
-@foreach (var advertisment in Model.MyAdvertisements)
-{
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">Title: @advertisment.Title</h5>
-            <p class="card-text">Body: @advertisment.Body</p>
-            <p class="card-text">Author: @advertisment.Author.UserName</p>
-            <p class="card-text">Likes: @advertisment.Likes.Count</p>
-            @if (User.Identity.Name != null)
-            {
-                @if (advertisment.Likes.Any(x => x.Author.UserName == User.Identity.Name))
-                {
-                    <a asp-controller="Likes" asp-action="Unlike" asp-route-advertisementId="@advertisment.Id" class="btn btn-info">Unlike</a>
-                }
-                else
-                {
-                    <a asp-controller="Likes" asp-action="Like" asp-route-advertisementId="@advertisment.Id" class="btn btn-primary">Like</a>
-                }
-            }
-            <a asp-controller="Comments" asp-action="AllByAdverisement" asp-route-id="@advertisment.Id" class="btn btn-primary">See Comments</a>
-            <a asp-controller="Advertisements" asp-action="Edit" asp-route-id="@advertisment.Id" class="btn btn-primary">Edit</a>
-            <a asp-controller="Advertisements" asp-action="Delete" asp-route-id="@advertisment.Id" class="btn btn-danger">Delete</a>
-        </div>
-    </div>
+<h1>My Advertisements</h1>
 
+<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back</a>
+
+@if (Model.MyAdvertisements.Count == 0)
+{
+    <h1 class="text-danger">You dont have advertisements yet.</h1>
+}
+else
+{
+    @foreach (var advertisment in Model.MyAdvertisements)
+    {
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Title: @advertisment.Title</h5>
+                <p class="card-text">Body: @advertisment.Body</p>
+                <p class="card-text">Author: @advertisment.Author.UserName</p>
+                <p class="card-text">Comments: @advertisment.Comments.Count</p>
+                <p class="card-text">Likes: @advertisment.Likes.Count</p>
+
+                @if (User.Identity.Name != null)
+                {
+                    @if (advertisment.Likes.Any(x => x.Author.UserName == User.Identity.Name))
+                    {
+                        <a asp-controller="Likes" asp-action="Unlike" asp-route-advertisementId="@advertisment.Id" asp-route-callerView="MyAdvertisements" class="btn btn-info">Unlike</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Likes" asp-action="Like" asp-route-advertisementId="@advertisment.Id" asp-route-callerView="MyAdvertisements" class="btn btn-primary">Like</a>
+                    }
+                }
+                <a asp-controller="Comments" asp-action="Add" asp-route-advertisementId="@advertisment.Id" asp-route-adTitle="@advertisment.Title" asp-route-callerView="MyAdvertisements" class="btn btn-primary">Add Comment</a>
+                <a asp-controller="Comments" asp-action="SeeComments" asp-route-advertisementId="@advertisment.Id" asp-route-advertisementTitle="@advertisment.Title" class="btn btn-primary">See Comments</a>
+                <a asp-controller="Advertisements" asp-action="Edit" asp-route-id="@advertisment.Id" class="btn btn-primary">Edit</a>
+                <a asp-controller="Advertisements" asp-action="Delete" asp-route-id="@advertisment.Id" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    }
 }

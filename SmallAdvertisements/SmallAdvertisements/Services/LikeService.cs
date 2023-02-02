@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SmallAdvertisements.Data.Context;
 using SmallAdvertisements.Data.Entities;
+using SmallAdvertisements.Models.ServiceModels.Like.Output;
 using SmallAdvertisements.Services.Contracts;
 
 namespace SmallAdvertisements.Services
@@ -13,6 +14,19 @@ namespace SmallAdvertisements.Services
         public LikeService(AdvertisementsDbContext data)
         {
             _data = data;
+        }
+
+        public ICollection<LikeOutputModel> GetUserLikes(string userId)
+        {
+            var likes = _data.Likes.Where(x => x.Author.Id == userId).Select(x => new LikeOutputModel()
+            {
+                Id = x.Id,
+                AdvertisementId = x.AdvertisementId,
+                Author = x.Author,
+                AdvertisementTitle = x.Advertisement.Title
+            }).ToList();
+
+            return likes; 
         }
 
         public bool Like(int advertisementId, IdentityUser user)
@@ -35,11 +49,9 @@ namespace SmallAdvertisements.Services
                 Author = user
             };
 
-            //advertisementToLike.Likes.Add(like);
 
             try
             {
-                //_data.Advertisements.Update(advertisementToLike);
                 _data.Likes.Add(like);
                 _data.SaveChanges();
             }

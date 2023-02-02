@@ -25,6 +25,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 
 builder.Services.AddScoped<IAdvertisementService, AdvertisementService>();
 builder.Services.AddScoped<ILikeService, LikeService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.ConfigureApplicationCookie(config =>
 {
