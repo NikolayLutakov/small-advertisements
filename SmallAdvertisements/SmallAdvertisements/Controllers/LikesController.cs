@@ -17,48 +17,72 @@ namespace SmallAdvertisements.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Like(int advertisementId, string caller)
+        public async Task<IActionResult> Like(int advertisementId, string callerView)
         {
-            var controller = "Advertisements";
-            var action = "MyAdvertisements";
-            if(!string.IsNullOrEmpty(caller))
-            {
-                controller = "Home";
-                action = "Index";
-            }
-
             var currentUser = await _userManager.GetUserAsync(User);
 
-           var success = _likeService.Like(advertisementId, currentUser);
+            var success = _likeService.Like(advertisementId, currentUser);
 
             if (!success)
             {
                 return BadRequest();
             }
 
-            return RedirectToAction(action, controller);
+            if (callerView == "Details")
+            {
+                return RedirectToAction("Details", "Advertisements", new { advertisementId = advertisementId });
+            }
+
+            if (callerView == "MyAdvertisements")
+            {
+                return RedirectToAction("MyAdvertisements", "Advertisements");
+            }
+
+            if (callerView == "MyLikes")
+            {
+                return RedirectToAction("MyLikes", "Likes");
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> Unlike(int advertisementId, string caller)
+        public async Task<IActionResult> Unlike(int advertisementId, string callerView)
         {
-            var controller = "Advertisements";
-            var action = "MyAdvertisements";
-            if (!string.IsNullOrEmpty(caller))
-            {
-                controller = "Home";
-                action = "Index";
-            }
-
             var currentUser = await _userManager.GetUserAsync(User);
 
-            var success =  _likeService.Unlike(advertisementId, currentUser);
+            var success = _likeService.Unlike(advertisementId, currentUser);
 
             if (!success)
             {
                 return BadRequest();
             }
 
-            return RedirectToAction(action, controller);
+            if (callerView == "Details")
+            {
+                return RedirectToAction("Details", "Advertisements", new { advertisementId = advertisementId });
+            }
+
+            if (callerView == "MyAdvertisements")
+            {
+                return RedirectToAction("MyAdvertisements", "Advertisements");
+            }
+
+            if (callerView == "MyLikes")
+            {
+                return RedirectToAction("MyLikes", "Likes");
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyLikes()
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+
+            var likes = _likeService.GetUserLikes(currentUser.Id);
+
+            return View(likes.ToList());
         }
     }
 }

@@ -5,6 +5,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+<h1>Advertisements</h1>
+
 @foreach (var advertisment in Model.Advertisements)
 {
     <div class="card" style="width: 18rem;">
@@ -12,16 +14,16 @@
             <h5 class="card-title">@advertisment.Title</h5>
             <p class="card-text">@advertisment.Body</p>
             <p class="card-text">@advertisment.Author.UserName</p>
-            <a href="#" class="card-link">Details</a>
+            <a asp-controller="Advertisements" asp-action="Details" asp-route-advertisementId="@advertisment.Id" class="card-link">Details</a>
             @if (User.Identity.Name != null)
             {
                 @if (advertisment.Likes.Any(x => x.Author.UserName == User.Identity.Name))
                 {
-                    <a asp-controller="Likes" asp-action="Unlike" asp-route-advertisementId="@advertisment.Id" asp-route-caller="Index" class="btn btn-info">Unlike</a>
+                    <a asp-controller="Likes" asp-action="Unlike" asp-route-advertisementId="@advertisment.Id" asp-route-callerView="Index" class="btn btn-info">Unlike</a>
                 }
                 else
                 {
-                    <a asp-controller="Likes" asp-action="Like" asp-route-advertisementId="@advertisment.Id" asp-route-caller="Index" class="btn btn-primary">Like</a>
+                    <a asp-controller="Likes" asp-action="Like" asp-route-advertisementId="@advertisment.Id" asp-route-callerView="Index" class="btn btn-primary">Like</a>
                 }
             }
             

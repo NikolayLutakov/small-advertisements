@@ -108,6 +108,7 @@
                     Body = c.Body,
                     Author = c.Author,
                     Date = c.Date,
+                    //AdvertisementTitle = a.Title
 
                 }).ToList(),
                 Likes = a.Likes.Select(l => new LikeOutputModel
@@ -127,7 +128,7 @@
 
         public AdvertisementOutputModel GetById(int Id)
         {
-            var advertisement = _data.Advertisements.FirstOrDefault(x => x.Id == Id);
+            var advertisement = _data.Advertisements.Where(x => x.Id == Id).Include(x => x.Author).Include(x => x.Likes).ThenInclude(x => x.Author).Include(x => x.Comments).ThenInclude(x => x.Author).FirstOrDefault();
 
             if (advertisement == null)
             {
@@ -148,6 +149,7 @@
                     Body = c.Body,
                     Author = c.Author,
                     Date = c.Date,
+                    //AdvertisementTitle = advertisement.Title
 
                 }).ToList(),
                 Likes = advertisement.Likes.Select(l => new LikeOutputModel
@@ -179,6 +181,7 @@
                     Body = c.Body,
                     Author = c.Author,
                     Date = c.Date,
+                    //AdvertisementTitle = ad.Title
 
                 }).ToList(),
                 Likes = ad.Likes.Select(l => new LikeOutputModel

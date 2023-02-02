@@ -1,0 +1,32 @@
+﻿@using SmallAdvertisements.Models.ServiceModels.Like.Output;
+@model List<LikeOutputModel>
+
+<h1>My Likes</h1>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back</a>
+
+@if (Model.Count == 0)
+{
+    <h1 class="text-danger">You didn't like anything yet.</h1>
+}
+else
+{
+    <h1>Liked advertisements by you</h1>
+
+    foreach (var like in Model)
+    {
+        <div class="d-flex justify-content-between py-1 pt-2">
+            <div><span class="text2">@like.AdvertisementTitle</span></div>
+            <div>
+                @if (Model.Any(x => x.Author.UserName == User.Identity.Name))
+                {
+                    <a asp-controller="Likes" asp-action="Unlike" asp-route-advertisementId="@like.AdvertisementId" asp-route-callerView="MyLikes" class="btn btn-info">Unlike</a>
+                }
+                else
+                {
+                    <a asp-controller="Likes" asp-action="Like" asp-route-advertisementId="@like.AdvertisementId" asp-route-callerView="MyLikes" class="btn btn-primary">Like</a>
+                }
+            </div>
+        </div>
+    }
+}

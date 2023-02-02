@@ -6,5 +6,6 @@
     {
         public int Id { get; set; }
         public string Body { get; set; }
+        public IdentityUser Editor { get; set; }
     }
 }

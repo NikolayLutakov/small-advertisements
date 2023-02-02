@@ -12,5 +12,9 @@
         bool Edit(EditCommentInputModel model);
 
         ICollection<CommentOutputModel> GetCommentsByUser(string userId);
+
+        CommentOutputModel GetById(int commentId);
+
+        ICollection<CommentOutputModel> GetCommentsByAdverisement(int advertisementId);
     }
 }

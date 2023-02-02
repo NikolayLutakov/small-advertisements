@@ -4,6 +4,9 @@
 
     public class CommentsFormModel
     {
+        public string CallerView { get; set; }
+
+        public string AdvertisementTitle { get; set; }
         public int? Id { get; set; }
 
         [Required]

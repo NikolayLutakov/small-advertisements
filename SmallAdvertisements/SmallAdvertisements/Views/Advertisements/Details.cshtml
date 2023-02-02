@@ -1,0 +1,61 @@
+﻿@using SmallAdvertisements.Models.ViewModels.Advertisement;
+@model AdvertisementDetailsViewModel
+
+<h1>Deatails</h1>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back</a>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Model.AdvertisementTitle</h5>
+                <p class="card-text">@Model.Body</p>
+                <div>
+                    <span>Author: @Model.Author</span>
+                </div>
+                <div>
+                    <span>Date: @Model.DateAdded</span>
+                </div>
+                <div>
+                    <span>Likes: @Model.LikesCount</span>
+                </div>
+
+                @if (User.Identity.Name != null)
+                {
+                    @if (Model.Likes.Any(x => x.Author.UserName == User.Identity.Name))
+                    {
+                        <a asp-controller="Likes" asp-action="Unlike" asp-route-advertisementId="@Model.Id" asp-route-callerView="Details" class="btn btn-info">Unlike</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Likes" asp-action="Like" asp-route-advertisementId="@Model.Id" asp-route-callerView="Details" class="btn btn-primary">Like</a>
+                    }
+                    <a asp-controller="Comments" asp-action="Add" asp-route-advertisementId="@Model.Id" asp-route-adTitle="@Model.AdvertisementTitle" asp-route-callerView="Details" class="btn btn-primary">Add Comment</a>
+                }
+
+                @if (Model.Comments.Count > 0)
+                {
+                    <hr />
+                    <div>Comments:</div>
+                }
+                @foreach (var comment in Model.Comments)
+                {
+                    <hr />
+                    <div class="second py-2 px-2">
+                        <span class="text1">@comment.Body</span>
+                        <div class="d-flex justify-content-between py-1 pt-2">
+                            <div><span class="text2">Author: @comment.Author.UserName</span></div>
+                            <div><span class="text2">Date: @comment.Date.ToString("d")</span></div>
+                        </div>
+                        @if (comment.Author.UserName == User.Identity.Name)
+                        {
+                            <a asp-controller="Comments" asp-action="Edit" asp-route-commentId="@comment.Id" asp-route-callerView="Details" class="btn btn-primary">Edit</a>
+                            <a asp-controller="Comments" asp-action="Delete" asp-route-commentId="@comment.Id" asp-route-callerView="Details" class="btn btn-danger">Delete</a>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

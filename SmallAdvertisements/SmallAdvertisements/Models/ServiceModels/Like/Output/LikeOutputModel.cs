@@ -12,6 +12,8 @@
 
         public int AdvertisementId { get; set; }
 
+        public string AdvertisementTitle { get; set; }
+
 
     }
 }

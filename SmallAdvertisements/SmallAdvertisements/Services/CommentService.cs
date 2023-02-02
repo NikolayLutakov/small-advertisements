@@ -1,5 +1,6 @@
 ﻿namespace SmallAdvertisements.Services
 {
+    using Microsoft.EntityFrameworkCore;
     using SmallAdvertisements.Data.Context;
     using SmallAdvertisements.Data.Entities;
     using SmallAdvertisements.Models.ServiceModels.Comment.Input;
@@ -46,7 +47,7 @@
 
         public bool Delete(int Id, string userId)
         {
-            var currentComment = _data.Comments.FirstOrDefault(c => c.Id == Id && c.Author.Id == userId);
+            var currentComment = _data.Comments.Where(c => c.Id == Id && c.Author.Id == userId).Include(x => x.Author).FirstOrDefault();
 
             if (currentComment == null)
             {
@@ -69,9 +70,9 @@
 
         public bool Edit(EditCommentInputModel model)
         {
-            var currentComment = _data.Comments.FirstOrDefault(x => x.Id == model.Id);
+            var currentComment = _data.Comments.Where(x => x.Id == model.Id).Include(x => x.Author).FirstOrDefault();
 
-            if (currentComment == null)
+            if (currentComment == null || currentComment.Author.Id != model.Editor.Id)
             {
                 return false;
             }
@@ -94,6 +95,36 @@
 
         }
 
+        public CommentOutputModel GetById(int commentId)
+        {
+            var comment = _data.Comments.Where(x => x.Id == commentId)
+                .Select(x => new CommentOutputModel()
+                {
+                    AdvertisementId = x.AdvertisementId,
+                    Author = x.Author,
+                    Body = x.Body,
+                    Id = x.Id,
+                    AdvertisementTitle = x.Advertisement.Title
+                })
+                .FirstOrDefault();
+
+            return comment;
+        }
+
+        public ICollection<CommentOutputModel> GetCommentsByAdverisement(int advertisementId)
+        {
+            var comments = _data.Comments.Where(x => x.AdvertisementId == advertisementId).Select(x => new CommentOutputModel
+            {
+                AdvertisementId = x.AdvertisementId,
+                Id = x.Id,
+                Author= x.Author,
+                Body = x.Body,
+                Date = x.Date
+            }).ToList();
+
+            return comments;
+        }
+
         public ICollection<CommentOutputModel> GetCommentsByUser(string userId)
         {
             var userComments = _data.Comments
@@ -103,8 +134,9 @@
                     Id = c.Id,
                     Body = c.Body,
                     AdvertisementId = c.AdvertisementId,
-                    Date = c.Date
-
+                    Date = c.Date,
+                    Author = c.Author,
+                    AdvertisementTitle = c.Advertisement.Title
                 })
                 .OrderByDescending(c=>c.Date)
                 .ToList();

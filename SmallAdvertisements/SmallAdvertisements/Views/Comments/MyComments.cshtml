@@ -1,0 +1,30 @@
+﻿@using SmallAdvertisements.Models.ServiceModels.Comment.Output;
+@model List<CommentOutputModel>
+
+<h1>My Comments</h1>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back</a>
+@if (Model.Count == 0)
+{
+    <h1 class="text-danger">You have no comments yet.</h1>
+}
+else
+{
+    foreach (var comment in Model)
+    {
+        <div class="second py-2 px-2">
+            <div>
+                <span class="text1" style="font-weight: bold">Advertisement Title: </span><span class="text1">@comment.AdvertisementTitle</span>
+            </div>
+            <div>
+                <span class="text1">@comment.Body</span>
+            </div>
+            <div class="d-flex justify-content-between py-1 pt-2">
+                <div><span class="text2">Author: @comment.Author.UserName</span></div>
+                <div><span class="text2">Date: @comment.Date.ToString("d")</span></div>
+            </div>
+            <a asp-controller="Comments" asp-action="Edit" asp-route-commentId="@comment.Id" asp-route-callerView="MyComments" class="btn btn-primary">Edit</a>
+            <a asp-controller="Comments" asp-action="Delete" asp-route-commentId="@comment.Id" asp-route-callerView="MyComments" class="btn btn-danger">Delete</a>
+        </div>
+    }
+}
